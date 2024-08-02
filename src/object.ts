@@ -269,10 +269,10 @@ export const set = <T extends object, K>(
  * object applying values from right to left.
  * Recursion only applies to child object properties.
  */
-export const assign = <X extends Record<string | symbol | number, any>>(
+export const assign = <X extends Record<string | symbol | number, any>, T extends Record<string | symbol | number, any> = X>(
   initial: X,
-  override: X
-): X => {
+  override: T
+): X & T => {
   if (!initial || !override) return initial ?? override ?? {}
 
   return Object.entries({ ...initial, ...override }).reduce(
@@ -286,7 +286,7 @@ export const assign = <X extends Record<string | symbol | number, any>>(
         })()
       }
     },
-    {} as X
+    {} as X & T
   )
 }
 
